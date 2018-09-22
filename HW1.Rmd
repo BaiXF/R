@@ -1,0 +1,107 @@
+---
+title: "SDGB 7844 HW 1: R Syntax and Control Structures"
+author: "Amber Ren, class 1:15-3:15p.m"
+date: "13/09/2018"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question 1
+```{r, echo=FALSE}
+class(state.name)
+class(state.area)
+class(state.region)
+state.name[nchar(state.name)==max(nchar(state.name))]
+max(nchar(state.name))
+mean(state.area[substr(state.name, start=1, stop=3)=="New"])
+table.region <- table(factor(as.character(state.region), levels = c("Northeast", "South", "North Central", "West")))
+colnames <- c("Northeast", "South", "North Central", "West")
+library(knitr)
+kable(summary(table.region), caption="table of region")
+```
+(a) The data type of state.name, state.area and state.region are respectively character, numberic and factor.
+(b) The longest names are North Carolina and South Carolina. Both of them have 14 characters.
+(c) The average area is 47095.5
+(d) There are 9 states in the Northeast, 16 in the South, 12 in the North Central and 13 in the West.
+
+##Question 2
+(a) Debug
+(1) count <- 1
+(2) for (i in 2:(iter-1))
+(3) if(sum(divisor)==iter)
+(4) print(paste(iter, " is a perfect number", sep=""))
+```{r}
+num.perfect <- 2    # the number of perfect number that we are asked to find
+      count <- 1    # starts from 1 to find the first perfect number
+      iter <- 2     # number to start our checking
+      
+while(count <= num.perfect){
+         divisor <- 1
+         for(i in 2:(iter-1)){ 
+           if(iter%%i==0) divisor <- c(divisor, i)    # find the number divisible by iter
+         }  # end for loop
+         if(sum(divisor)==iter){ # check if the sum of divisors equal to iter
+          print(paste(iter, " is a perfect number", sep="")) # print our result
+          count <- count + 1 # add count by 1 if iter is a perfect number
+} # end if
+         iter <- iter + 1 # start checking next iter
+      } # end while loop
+```
+(b) Run time table
+Number of Perfect Number Discovered | Running Time(s) 
+------- | -------
+1 | 0
+2 | 0
+3 | 1
+4 | 6
+The first four perfect numbers are 6, 28, 296, 8128.
+```{r, echo=FALSE}
+  date()
+  num.perfect <- 1   # the number of perfect number that we are asked to find
+      count <- 1    # starts from 1 to find the first perfect number
+      iter <- 2     # number to start our checking
+      
+while(count <= num.perfect){
+         divisor <- 1
+         for(i in 2:(iter-1)){ 
+           if(iter%%i==0) divisor <- c(divisor, i)    # find the number divisible by iter
+         }  # end for loop
+         if(sum(divisor)==iter){ # check if the sum of divisors equal to iter
+          print(paste(iter, " is a perfect number", sep="")) # print our result
+          count <- count + 1 # add count by 1 if iter is a perfect number
+} # end if
+        iter <- iter + 1 # start checking next iter
+      } # end while loop
+      date()
+```
+(c)The relationship between the discovery of perfect numbers and run times on your computer is not linear as we can tell from the graph that the rate of increasing is increasing, which is not constant.
+```{r, echo=FALSE}
+x <- 1:4
+y <- c(0, 0, 1, 6)
+plot(x, y, pch=20, type="b",
+            xlab="number of perfect numbers discovered",
+            ylab="cumulative length of time (in seconds)",
+            main="Cumulative Run Times to Discover Perfect Numbers",
+            las=TRUE)
+```
+##Question 3
+(a)
+```{r}
+x <- c(-Inf, 67, 3)
+x <- x[!is.na(x)]
+n <- length(x)
+product.x <- 1
+for (i in 1:n) {
+  if( x[i] > 0){
+    product.x <- product.x * x[i]
+  }
+  else{
+    print("error")
+    break
+  }
+}
+product.x^(1/n)
+```
