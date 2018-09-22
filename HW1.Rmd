@@ -14,14 +14,25 @@ knitr::opts_chunk$set(echo = TRUE)
 class(state.name)
 class(state.area)
 class(state.region)
+# class() - what kind of object is it (high-level)
+# typeof() - what is the object’s data type (low-level)
+typeof(state.name)
+typeof(state.area)
+typeof(state.region)
 state.name[nchar(state.name)==max(nchar(state.name))]
 max(nchar(state.name))
 mean(state.area[substr(state.name, start=1, stop=3)=="New"])
 table.region <- table(factor(as.character(state.region), levels = c("Northeast", "South", "North Central", "West")))
 colnames <- c("Northeast", "South", "North Central", "West")
+unique(state.region)
+# unique(x) gives distinct values in a factor. Try to use this to reduce hardcode?
 library(knitr)
+# Make sure you leave a blank line before and after the table
 kable(summary(table.region), caption="table of region")
+# Do we really need this "levels" and "table region"? What about kable(summary(state.region), caption="table of region") directly?
 ```
+# Below: Use R code instead of answer directly?
+# "The goal of RMarkdown is to reduce copy/pasting results which can add an additional source of error"
 (a) The data type of state.name, state.area and state.region are respectively character, numberic and factor.
 (b) The longest names are North Carolina and South Carolina. Both of them have 14 characters.
 (c) The average area is 47095.5
@@ -30,8 +41,11 @@ kable(summary(table.region), caption="table of region")
 ##Question 2
 (a) Debug
 (1) count <- 1
+# "count" has its meaning of current count of perfect number. It has be initialized to 0. However, you may change while(count < num.perfect) to achieve the same goal.
 (2) for (i in 2:(iter-1))
+# (Optional) ceiling((iter-1)/2) is enough to stop to savve execution time.
 (3) if(sum(divisor)==iter)
+# (Optional) divisor is unnecessary. You may just keep a "sum <- 1", then add each divisor, and compapre with iter in the end, to save time and space.
 (4) print(paste(iter, " is a perfect number", sep=""))
 ```{r}
 num.perfect <- 2    # the number of perfect number that we are asked to find
@@ -105,3 +119,4 @@ for (i in 1:n) {
 }
 product.x^(1/n)
 ```
+# If non-positive value occurs, show error message only without the meaningless result, by adding a flag "hasNonPositive <- false" at the beginning, and change the status to true before "break", finally perform "product.x^(1/n)" only when "hasNonPositive==false"
